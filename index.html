@@ -9,8 +9,7 @@
         <script>
             (async function() {
                 const baseUrl = "https://gisenthecat.github.io/overridehelper/";
-                const overridesJson = await fetch(baseUrl + "overrides.json").then(res => res.json());
-                const overrides = JSON.parse(overridesJson);
+                const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
                 const installedOverrides = {};
 
                 async function getFolderAccess() {
