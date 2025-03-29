@@ -10,14 +10,16 @@
             const baseUrl = "https://gisenthecat.github.io/overridehelper/";
             const installedOverrides = {};
             async function getFolderAccess() {
-                const handle = await window.showDirectoryPicker();
+                const handle = await window.showDirectoryPicker({
+                    "mode": "readwrite"
+                });
                 return handle;
             }
-            async function listOverrides(folderHandle) {
+            async function listOverrides(folderHandle, curPath = "") {
                 for await (const [name, handle] of folderHandle.entries()) {
-                    console.log(handle);
-                    if (handle.kind == "folder") {
-                        overrides[name] = handle.entries();
+                    console.log(curPath + handle);
+                    if (handle.kind == "directory") {
+                        listOverrides(handle, curPath + handle.name + "/")
                     }
                 }
             }
