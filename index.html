@@ -44,25 +44,38 @@
                 return newFolderHandle;
             }
 
-            async function start() {
-                document.body.onclick = "";
-                const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
-                let folderAccess = await getFolderAccess();
-                await listOverrides(folderAccess);
+            async function checkForUpdates(overrides) {
                 for (let i = 0; i < Object.keys(installedOverrides).length; i++) {
                     let overrideName = Object.keys(installedOverrides)[i];
                     let overrideHandle = installedOverrides[overrideName];
                     if (overrides[overrideName] != undefined) {
                         fetch(overrides[overrideName].src).then((res) => res.text()).then(async (text) => {
                             const oldText = await readFile(overrideHandle);
-                            if (text !== oldText) {
-                                console.log("needs update");
+                            const newText = `(function(){var originalScript=document.createElement('script');originalScript.src='${overrides[overrideName].src}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`;
+                            if (newText !== oldText) {
+                                overrides[overrideName]["update"] = true;
                             } else {
-                                console.log("does not need update");
+                                overrides[overrideName]["update"] = false;
                             }
                         })
                     }
                 }
+            }
+
+            async function start() {
+                document.body.onclick = "";
+                const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
+                let folderAccess = await getFolderAccess();
+                await listOverrides(folderAccess);
+                await checkForUpdates(overrides);
+
+                Object.values(overrides).forEach((override) => {
+                    if (installedOverrides[override.path]) {
+                        console.log(override.name + (override.update ? " has an update" : " is awesome"))
+                    } else {
+                        console.log(override.name + " is not installed")
+                    }
+                });
             }
         </script>
     </head>
