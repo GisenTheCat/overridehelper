@@ -1,44 +1,61 @@
-const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
-            const overridesJson = fetch(baseUrl + "overrides.json");
-            const overrides = JSON.parse(overridesJson);
-            const installedOverrides = {};
-
-            async function getFolderAccess() {
-                const handle = await window.showDirectoryPicker();
-                return handle;
+<html>
+    <head>
+        <title>Override Helper</title>
+        <style>
+            body {
+                background-color: #121412;
             }
-            async function listOverrides(folderHandle) {
-                for await (const [name, handle] of folderHandle.entries()) {
-                    if (handle.kind == "folder") {
-                        overrides[name] = handle.entries(); 
-                        console.log(handle);
+        </style>
+        <script>
+            (async function() {
+                const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
+                const overridesJson = fetch(baseUrl + "overrides.json");
+                const overrides = JSON.parse(overridesJson);
+                const installedOverrides = {};
+
+                async function getFolderAccess() {
+                    const handle = await window.showDirectoryPicker();
+                    return handle;
+                }
+                async function listOverrides(folderHandle) {
+                    for await (const [name, handle] of folderHandle.entries()) {
+                        if (handle.kind == "folder") {
+                            overrides[name] = handle.entries();
+                            console.log(handle);
+                        }
                     }
                 }
-            } 
-            async function readFile(fileHandle) {
-                const file = await fileHandle.getFile();
-                const text = await file.text();
-                return text;
-            }
-            async function saveFile(fileHandle, content) {
-                const writable = await fileHandle.createWritable();
-                await writable.write(content);
-                await writable.close();
-            }
-            async function createAndSaveFile(folderHandle, fileName, content) {
-                const fileHandle = await folderHandle.getFileHandle(fileName, { create: true });
-                await saveFile(fileHandle, content);
-            }
-            async function createFolder(parentFolderHandle, folderName) {
-                const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
-                return newFolderHandle;
-            }
-
-            let folderAccess = await getFolderAccess();
-            listOverrides(folderAccess);
-            
-            for await (const [name, handle] of folderHandle.entries()) {
-                if (handle.kind == "folder") {
-                    overrides[name] = handle.entries(); 
+                async function readFile(fileHandle) {
+                    const file = await fileHandle.getFile();
+                    const text = await file.text();
+                    return text;
                 }
-            }
+                async function saveFile(fileHandle, content) {
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(content);
+                    await writable.close();
+                }
+                async function createAndSaveFile(folderHandle, fileName, content) {
+                    const fileHandle = await folderHandle.getFileHandle(fileName, { create: true });
+                    await saveFile(fileHandle, content);
+                }
+                async function createFolder(parentFolderHandle, folderName) {
+                    const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
+                    return newFolderHandle;
+                }
+
+                let folderAccess = await getFolderAccess();
+                listOverrides(folderAccess);
+
+                for await (const [name, handle] of folderHandle.entries()) {
+                    if (handle.kind == "folder") {
+                        overrides[name] = handle.entries();
+                    }
+                }
+                })();
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
