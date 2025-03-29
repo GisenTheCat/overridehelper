@@ -91,6 +91,7 @@
                         let installButton = document.createElement("button");
                         installButton.innerText = "INSTALL";
                         installButton.onclick = `install(${override.path})`;
+                        overrideDiv.appendChild(installButton);
                     }
                 });
             }
