@@ -42,19 +42,16 @@
                     const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
                     return newFolderHandle;
                 }
-
-                let folderAccess = await getFolderAccess();
-                listOverrides(folderAccess);
-
-                for await (const [name, handle] of folderHandle.entries()) {
-                    if (handle.kind == "folder") {
-                        overrides[name] = handle.entries();
-                    }
-                }
                 })();
+
+                async function start() {
+                    document.body.onclick = "";
+                    let folderAccess = await getFolderAccess();
+                    listOverrides(folderAccess);
+                }
         </script>
     </head>
-    <body>
+    <body onclick="start()">
 
     </body>
 </html>
