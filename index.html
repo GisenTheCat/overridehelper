@@ -7,45 +7,42 @@
             }
         </style>
         <script>
-            (async function() {
-                const baseUrl = "https://gisenthecat.github.io/overridehelper/";
-                const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
-                const installedOverrides = {};
-
-                async function getFolderAccess() {
-                    const handle = await window.showDirectoryPicker();
-                    return handle;
-                }
-                async function listOverrides(folderHandle) {
-                    for await (const [name, handle] of folderHandle.entries()) {
-                        if (handle.kind == "folder") {
-                            overrides[name] = handle.entries();
-                            console.log(handle);
-                        }
+            const baseUrl = "https://gisenthecat.github.io/overridehelper/";
+            const installedOverrides = {};
+            async function getFolderAccess() {
+                const handle = await window.showDirectoryPicker();
+                return handle;
+            }
+            async function listOverrides(folderHandle) {
+                for await (const [name, handle] of folderHandle.entries()) {
+                    if (handle.kind == "folder") {
+                        overrides[name] = handle.entries();
+                        console.log(handle);
                     }
                 }
-                async function readFile(fileHandle) {
-                    const file = await fileHandle.getFile();
-                    const text = await file.text();
-                    return text;
-                }
-                async function saveFile(fileHandle, content) {
-                    const writable = await fileHandle.createWritable();
-                    await writable.write(content);
-                    await writable.close();
-                }
-                async function createAndSaveFile(folderHandle, fileName, content) {
-                    const fileHandle = await folderHandle.getFileHandle(fileName, { create: true });
-                    await saveFile(fileHandle, content);
-                }
-                async function createFolder(parentFolderHandle, folderName) {
-                    const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
-                    return newFolderHandle;
-                }
-                })();
+            }
+            async function readFile(fileHandle) {
+                const file = await fileHandle.getFile();
+                const text = await file.text();
+                return text;
+            }
+            async function saveFile(fileHandle, content) {
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+            }
+            async function createAndSaveFile(folderHandle, fileName, content) {
+                const fileHandle = await folderHandle.getFileHandle(fileName, { create: true });
+                await saveFile(fileHandle, content);
+            }
+            async function createFolder(parentFolderHandle, folderName) {
+                const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
+                return newFolderHandle;
+            }
 
                 async function start() {
                     document.body.onclick = "";
+                    const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
                     let folderAccess = await getFolderAccess();
                     listOverrides(folderAccess);
                 }
