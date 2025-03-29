@@ -73,6 +73,10 @@
                     if (installedOverrides[override.path]) {
                         console.log(override.name + (override.update ? " has an update" : " is awesome"))
                     } else {
+                        overrideDiv = document.createElement("div");
+                        overrideDiv.innerText = override.name;
+                        overrideDiv.style.color = "red";
+                        document.body.appendChild(overrideDiv);
                         console.log(override.name + " is not installed")
                     }
                 });
