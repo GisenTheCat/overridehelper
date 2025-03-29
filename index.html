@@ -8,8 +8,8 @@
         </style>
         <script>
             (async function() {
-                const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
-                const overridesJson = await fetch(baseUrl + "overrides.json");
+                const baseUrl = "https://gisenthecat.github.io/overridehelper/";
+                const overridesJson = await fetch(baseUrl + "overrides.json").then(res => res.json());
                 const overrides = JSON.parse(overridesJson);
                 const installedOverrides = {};
 
