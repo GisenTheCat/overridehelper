@@ -74,7 +74,7 @@
             }
 
             async function start() {
-                document.body.onclick = "";
+                document.body.removeAttribute("onclick");
                 const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
@@ -90,7 +90,7 @@
                         document.body.appendChild(overrideDiv);
                         let installButton = document.createElement("button");
                         installButton.innerText = "INSTALL";
-                        installButton.onclick = `install(${override.path})`;
+                        installButton.setAttribute("onclick", `install(${override.path})`);
                         overrideDiv.appendChild(installButton);
                     }
                 });
