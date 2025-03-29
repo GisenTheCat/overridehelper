@@ -50,7 +50,7 @@
                 let folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
                 for (let i = 0; i < Object.keys(installedOverrides).length; i++) {
-                    let overrideName = Object.keys(installedOverrides)[overrides];
+                    let overrideName = Object.keys(installedOverrides)[i];
                     let overrideHandle = installedOverrides[overrideName];
                     if (overrides[overrideName] != undefined) {
                         fetch(overrides[overrideName].src).then((res) => res.text()).then(async (text) => {
