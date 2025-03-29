@@ -1,13 +1,4 @@
-<html>
-    <head>
-        <title>Override Helper</title>
-        <style>
-            body {
-                background-color: #121412;
-            }
-        </style>
-        <script>
-            const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
+const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
             const overridesJson = fetch(baseUrl + "overrides.json");
             const overrides = JSON.parse(overridesJson);
             const installedOverrides = {};
@@ -51,10 +42,3 @@
                     overrides[name] = handle.entries(); 
                 }
             }
-
-        </script>
-    </head>
-    <body>
-
-    </body>
-</html>
