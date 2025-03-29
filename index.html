@@ -19,7 +19,7 @@
                 for await (const [name, handle] of folderHandle.entries()) {
                     console.log(curPath + handle.name);
                     if (handle.kind == "directory") {
-                        listOverrides(handle, curPath + handle.name + "/");
+                        await listOverrides(handle, curPath + handle.name + "/");
                     } else if (handle.kind == "file") {
                         installedOverrides[curPath + handle.name] = handle;
                     }
