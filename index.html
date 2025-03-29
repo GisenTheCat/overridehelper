@@ -11,7 +11,7 @@
             const installedOverrides = {};
             async function getFolderAccess() {
                 const handle = await window.showDirectoryPicker({
-                    "mode": "readwrite"
+                    mode: "readwrite"
                 });
                 return handle;
             }
@@ -19,7 +19,9 @@
                 for await (const [name, handle] of folderHandle.entries()) {
                     console.log(curPath + handle.name);
                     if (handle.kind == "directory") {
-                        listOverrides(handle, curPath + handle.name + "/")
+                        listOverrides(handle, curPath + handle.name + "/");
+                    } else if (handle.kind == "file") {
+                        installedOverrides[curPath + handle.name] = handle;
                     }
                 }
             }
@@ -44,9 +46,23 @@
 
             async function start() {
                 document.body.onclick = "";
-                const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
+                const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 let folderAccess = await getFolderAccess();
-                listOverrides(folderAccess);
+                await listOverrides(folderAccess);
+                for (let i = 0; i < Object.keys(installedOverrides).length; i++) {
+                    let overrideName = Object.keys(installedOverrides)[overrides];
+                    let overrideHandle = installedOverrides[overrideName];
+                    if (overrides[overrideName] != undefined) {
+                        fetch(overrides[overrideName].src).then((res) => res.text()).then(async (text) => {
+                            const oldText = await readFile(overrideHandle);
+                            if (text !== oldText) {
+                                console.log("needs update");
+                            } else {
+                                console.log("does not need update");
+                            }
+                        })
+                    }
+                }
             }
         </script>
     </head>
