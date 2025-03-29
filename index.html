@@ -69,7 +69,7 @@
                 await listOverrides(folderAccess);
                 await checkForUpdates(overrides);
 
-                return overrides;
+                console.log(overrides);
 
                 Object.values(overrides).forEach((override) => {
                     if (installedOverrides[override.path]) {
