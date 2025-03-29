@@ -90,7 +90,7 @@
                         document.body.appendChild(overrideDiv);
                         let installButton = document.createElement("button");
                         installButton.innerText = "INSTALL";
-                        installButton.setAttribute("onclick", `install(${override.path})`);
+                        installButton.setAttribute("onclick", `install("${override.path}")`);
                         overrideDiv.appendChild(installButton);
                     }
                 });
