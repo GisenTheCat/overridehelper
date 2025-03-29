@@ -15,9 +15,9 @@
             }
             async function listOverrides(folderHandle) {
                 for await (const [name, handle] of folderHandle.entries()) {
+                    console.log(handle);
                     if (handle.kind == "folder") {
                         overrides[name] = handle.entries();
-                        console.log(handle);
                     }
                 }
             }
@@ -40,12 +40,12 @@
                 return newFolderHandle;
             }
 
-                async function start() {
-                    document.body.onclick = "";
-                    const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
-                    let folderAccess = await getFolderAccess();
-                    listOverrides(folderAccess);
-                }
+            async function start() {
+                document.body.onclick = "";
+                const overrides = await fetch(baseUrl + "overrides.json").then(res => res.json());
+                let folderAccess = await getFolderAccess();
+                listOverrides(folderAccess);
+            }
         </script>
     </head>
     <body onclick="start()">
