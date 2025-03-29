@@ -9,7 +9,7 @@
         <script>
             (async function() {
                 const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
-                const overridesJson = fetch(baseUrl + "overrides.json");
+                const overridesJson = await fetch(baseUrl + "overrides.json");
                 const overrides = JSON.parse(overridesJson);
                 const installedOverrides = {};
 
