@@ -17,7 +17,7 @@
             }
             async function listOverrides(folderHandle, curPath = "") {
                 for await (const [name, handle] of folderHandle.entries()) {
-                    console.log(curPath + handle);
+                    console.log(curPath + handle.name);
                     if (handle.kind == "directory") {
                         listOverrides(handle, curPath + handle.name + "/")
                     }
