@@ -7,7 +7,10 @@
             }
         </style>
         <script>
-            const overrides = {};
+            const baseUrl = "https://raw.githubusercontent.com/GisenTheCat/overridehelper/refs/heads/main/";
+            const overridesJson = fetch(baseUrl + "overrides.json");
+            const overrides = JSON.parse(overridesJson);
+            const installedOverrides = {};
 
             async function getFolderAccess() {
                 const handle = await window.showDirectoryPicker();
@@ -17,6 +20,7 @@
                 for await (const [name, handle] of folderHandle.entries()) {
                     if (handle.kind == "folder") {
                         overrides[name] = handle.entries(); 
+                        console.log(handle);
                     }
                 }
             } 
@@ -41,6 +45,13 @@
 
             let folderAccess = await getFolderAccess();
             listOverrides(folderAccess);
+            
+            for await (const [name, handle] of folderHandle.entries()) {
+                if (handle.kind == "folder") {
+                    overrides[name] = handle.entries(); 
+                }
+            }
+
         </script>
     </head>
     <body>
