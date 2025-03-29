@@ -4,9 +4,11 @@
         <style>
             body {
                 background-color: #121412;
+                font-size: 50px;
             }
         </style>
         <script>
+            let folderAccess;
             const baseUrl = "https://gisenthecat.github.io/overridehelper/";
             const installedOverrides = {};
             async function getFolderAccess() {
@@ -57,27 +59,38 @@
                             } else {
                                 overrides[overrideName]["update"] = false;
                             }
-                        })
+                        });
                     }
                 }
+            }
+            async function install(extension) {
+                let path = extension.split('/');
+                let folder = folderAccess;
+                let content = await fetch(overrides[overrideName].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='${overrides[overrideName].src}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                for (let i = 0; i < path.length - 1; i++) {
+                    folder = await createFolder(folder, path[i]);
+                }
+                createAndSaveFile(folder, path[path.length - 1], content);
             }
 
             async function start() {
                 document.body.onclick = "";
                 const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
-                let folderAccess = await getFolderAccess();
+                folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
                 await checkForUpdates(overrides);
 
                 Object.values(overrides).forEach((override) => {
-                    if (installedOverrides[override.path]) {
-                        console.log(override.name + (override.update ? " has an update" : " is awesome"))
-                    } else {
-                        overrideDiv = document.createElement("div");
+                        let overrideDiv = document.createElement("div");
                         overrideDiv.innerText = override.name;
+                    if (installedOverrides[override.path]) {
+                        overrideDiv.style.color = override.update ? "blue" : "green";
+                    } else {
                         overrideDiv.style.color = "red";
                         document.body.appendChild(overrideDiv);
-                        console.log(override.name + " is not installed")
+                        let installButton = document.createElement("button");
+                        installButton.innerText = "INSTALL";
+                        installButton.onclick = `install(${override.path})`;
                     }
                 });
             }
