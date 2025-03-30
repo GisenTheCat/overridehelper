@@ -125,11 +125,28 @@
                 }
                 return updateButton;
             }
+            async function checkCorrectOverrides(folderAccess) {
+                let folder = await createFolder(await createFolder(folderAccess, "gisenthecat.github.io"), "overridehelper");
+                await createAndSaveFile(folder, "check", "");
+                let status = await fetch("https://gisenthecat.github.io/overridehelper/check").then((res) => res.status);
+                if (status == 404) {
+                    return false;
+                }
+                return true;
+            }
 
             async function start() {
                 document.body.replaceChildren();
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
+                if (!(await checkCorrectOverrides())) {
+                    let sorryDiv = document.createElement("div");
+                    sorryDiv.innerText = "Seems like something went wrong, please check if you did everything right and try again";
+                    document.body.appendChild(sorryDiv);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 5000);
+                }
                 await listOverrides(folderAccess);
                 await checkForUpdates();
 
