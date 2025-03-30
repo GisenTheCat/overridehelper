@@ -100,6 +100,7 @@
                         overrideDiv.innerText = override.name;
                     if (installedOverrides[override.path]) {
                         overrideDiv.style.color = override.update ? "blue" : "green";
+                        document.body.appendChild(overrideDiv);
                         if (override.update) {
                             let uninstallButton = document.createElement("button");
                             updateButton.innerText = "UPDATE";
