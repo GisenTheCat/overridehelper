@@ -146,6 +146,7 @@
                     setTimeout(() => {
                         window.location.reload();
                     }, 5000);
+                    return;
                 }
                 await listOverrides(folderAccess);
                 await checkForUpdates();
