@@ -70,6 +70,13 @@
                 }
             }
             async function install(extension, button) {
+                let parentElement = button.parentElement;
+                button.remove();
+                Array.from(parentElement.childNodes).forEach((e) => {
+                    if (e.innerText == "UNINSTALL") {
+                        e.remove();
+                    };
+                });
                 let path = extension.split('/');
                 let folder = folderAccess;
                 let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
@@ -77,16 +84,17 @@
                     folder = await createFolder(folder, path[i]);
                 }
                 await createAndSaveFile(folder, path[path.length - 1], content);
-                Array.from(button.parentElement.childNodes).forEach((e) => {
-                    if (e.innerText == "UNINSTALL") {
-                        e.remove();
-                    };
-                })
-                button.parentElement.style.color = "green";
-                button.parentElement.appendChild(addButton(2, extension));
-                button.remove();
+                parentElement.style.color = "green";
+                parentElement.appendChild(addButton(2, extension));
             }
             async function uninstall(extension, button) {
+                let parentElement = button.parentElement;
+                button.remove();
+                Array.from(parentElement.childNodes).forEach((e) => {
+                    if (e.innerText == "UPDATE") {
+                        e.remove();
+                    };
+                });
                 let path = extension.split('/');
                 let folder = folderAccess;
                 let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
@@ -94,14 +102,8 @@
                     folder = await createFolder(folder, path[i]);
                 }
                 await deleteFile(folder, path[path.length - 1]);
-                Array.from(button.parentElement.childNodes).forEach((e) => {
-                    if (e.innerText == "UPDATE") {
-                        e.remove();
-                    };
-                })
-                button.parentElement.style.color = "red";
-                button.parentElement.appendChild(addButton(0, extension));
-                button.remove();
+                parentElement.style.color = "red";
+                parentElement.appendChild(addButton(0, extension));
             }
             function addButton(type, overridePath) {
                 let updateButton = document.createElement("button");
