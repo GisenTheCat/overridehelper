@@ -101,9 +101,15 @@
             function addButton(type, override) {
                 let updateButton = document.createElement("button");
                 updateButton.innerText = type == 2 ? "UNINSTALL" : (type == 0 ? "INSTALL" : "UPDATE");
-                eval(`updateButton.addEventListener("click", ((event) => {
-                    ${type == 2 ? "un" : ""}install(override.path, event.target);
-                }))`);
+                if (type == 2) {
+                    updateButton.addEventListener("click", ((event) => {
+                        uninstall(override.path, event.target);
+                    }));
+                } else {
+                    updateButton.addEventListener("click", ((event) => {
+                        install(override.path, event.target);
+                    }));
+                }
                 return updateButton;
             }
 
