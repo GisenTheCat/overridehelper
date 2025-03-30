@@ -89,7 +89,7 @@
                     folder = await createFolder(folder, path[i]);
                 }
                 await deleteFile(folder, path[path.length - 1]);
-                Array.from(button.getChildren()).foreach((e) => {
+                Array.from(button.parentElement.childNodes).forEach((e) => {
                     if (e.innerText == "UPDATE") {
                         e.remove();
                     };
