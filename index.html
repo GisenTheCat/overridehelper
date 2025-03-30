@@ -79,7 +79,12 @@
                 });
                 let path = extension.split('/');
                 let folder = folderAccess;
-                let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                if (!overrides[extension].content) {
+                    let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                    overrides[extension].content = content;
+                } else {
+                    let content = overrides[extension].content;
+                }
                 for (let i = 0; i < path.length - 1; i++) {
                     folder = await createFolder(folder, path[i]);
                 }
