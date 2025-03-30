@@ -77,6 +77,11 @@
                     folder = await createFolder(folder, path[i]);
                 }
                 await createAndSaveFile(folder, path[path.length - 1], content);
+                Array.from(button.parentElement.childNodes).forEach((e) => {
+                    if (e.innerText == "UNINSTALL") {
+                        e.remove();
+                    };
+                })
                 button.parentElement.style.color = "green";
                 button.parentElement.appendChild(addButton(2, extension));
                 button.remove();
