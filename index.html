@@ -8,6 +8,7 @@
             body {
                 background-color: #121412;
                 font-size: 50px;
+                color: white;
             }
         </style>
         <script>
@@ -127,6 +128,7 @@
 
             async function start() {
                 window.onclick = null;
+                body.innerHtml = "";
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
@@ -153,6 +155,6 @@
         </script>
     </head>
     <body>
-
+        <div>To set up overrides, you need to open DevTools (Ctrl + Shift + I) and open the Sources tab</div><img src="overridehelper/images/step1">
     </body>
 </html>
