@@ -9,6 +9,7 @@
         </style>
         <script>
             let folderAccess;
+            let overrides;
             const baseUrl = "https://gisenthecat.github.io/overridehelper/";
             const installedOverrides = {};
             async function getFolderAccess() {
@@ -46,7 +47,7 @@
                 return newFolderHandle;
             }
 
-            async function checkForUpdates(overrides) {
+            async function checkForUpdates() {
                 for (let i = 0; i < Object.keys(installedOverrides).length; i++) {
                     let overrideName = Object.keys(installedOverrides)[i];
                     let overrideHandle = installedOverrides[overrideName];
@@ -75,10 +76,10 @@
 
             async function start() {
                 document.body.removeAttribute("onclick");
-                const overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
+                overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
-                await checkForUpdates(overrides);
+                await checkForUpdates();
 
                 Object.values(overrides).forEach((override) => {
                         let overrideDiv = document.createElement("div");
