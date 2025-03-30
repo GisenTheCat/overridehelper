@@ -69,23 +69,34 @@
                     }
                 }
             }
-            async function install(extension) {
+            async function install(extension, button) {
                 let path = extension.split('/');
                 let folder = folderAccess;
                 let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
                 for (let i = 0; i < path.length - 1; i++) {
                     folder = await createFolder(folder, path[i]);
                 }
-                createAndSaveFile(folder, path[path.length - 1], content);
+                await createAndSaveFile(folder, path[path.length - 1], content);
+                button.parentElement.style.color = "green";
+                button.remove();
             }
-            async function uninstall(extension) {
+            async function uninstall(extension, button) {
                 let path = extension.split('/');
                 let folder = folderAccess;
                 let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
                 for (let i = 0; i < path.length - 1; i++) {
                     folder = await createFolder(folder, path[i]);
                 }
-                deleteFile(folder, path[path.length - 1]);
+                await deleteFile(folder, path[path.length - 1]);
+
+            }
+            function addButton(type, override) {
+                let updateButton = document.createElement("button");
+                updateButton.innerText = type == 2 ? "UNINSTALL" : (type == 0 ? "INSTALL" : "UPDATE");
+                eval(`updateButton.addEventListener("click", ((event) => {
+                    ${type == 2 ? "un" : ""}install(override.path, event.target);
+                }))`);
+                return updateButton;
             }
 
             async function start() {
@@ -100,25 +111,15 @@
                         overrideDiv.innerText = override.name;
                     if (installedOverrides[override.path]) {
                         overrideDiv.style.color = override.update ? "blue" : "green";
-                        document.body.appendChild(overrideDiv);
                         if (override.update) {
-                            let updateButton = document.createElement("button");
-                            updateButton.innerText = "UPDATE";
-                            updateButton.setAttribute("onclick", `install("${override.path}")`);
-                            overrideDiv.appendChild(updateButton);
+                            overrideDiv.appendChild(addButton(1, override));
                         }
-                        let uninstallButton = document.createElement("button");
-                        uninstallButton.innerText = "UNINSTALL";
-                        uninstallButton.setAttribute("onclick", `uninstall("${override.path}")`);
-                        overrideDiv.appendChild(uninstallButton);
+                        overrideDiv.appendChild(addButton(2, override));
                     } else {
                         overrideDiv.style.color = "red";
-                        document.body.appendChild(overrideDiv);
-                        let installButton = document.createElement("button");
-                        installButton.innerText = "INSTALL";
-                        installButton.setAttribute("onclick", `install("${override.path}")`);
-                        overrideDiv.appendChild(installButton);
+                        overrideDiv.appendChild(addButton(0, override));
                     }
+                    document.body.appendChild(overrideDiv);
                 });
             }
         </script>
