@@ -54,7 +54,7 @@
                     if (overrides[overrideName] != undefined) {
                         await fetch(overrides[overrideName].src).then((res) => res.text()).then(async (text) => {
                             const oldText = await readFile(overrideHandle);
-                            const newText = `(function(){var originalScript=document.createElement('script');originalScript.src=http${(overrides[overrideName].https ? "s://" : "://") + overrides[overrideName].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`;
+                            const newText = `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[overrideName].https ? "s://" : "://") + overrides[overrideName].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`;
                             if (newText !== oldText) {
                                 overrides[overrideName]["update"] = true;
                             } else {
@@ -67,7 +67,7 @@
             async function install(extension) {
                 let path = extension.split('/');
                 let folder = folderAccess;
-                let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src=http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
                 for (let i = 0; i < path.length - 1; i++) {
                     folder = await createFolder(folder, path[i]);
                 }
