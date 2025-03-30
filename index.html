@@ -78,7 +78,7 @@
                 }
                 await createAndSaveFile(folder, path[path.length - 1], content);
                 button.parentElement.style.color = "green";
-                button.parentElement.appendChild(addButton(2));
+                button.parentElement.appendChild(addButton(2), extension);
                 button.remove();
             }
             async function uninstall(extension, button) {
@@ -95,19 +95,19 @@
                     };
                 })
                 button.parentElement.style.color = "red";
-                button.parentElement.appendChild(addButton(0));
+                button.parentElement.appendChild(addButton(0), extension);
                 button.remove();
             }
-            function addButton(type, override) {
+            function addButton(type, overridePath) {
                 let updateButton = document.createElement("button");
                 updateButton.innerText = type == 2 ? "UNINSTALL" : (type == 0 ? "INSTALL" : "UPDATE");
                 if (type == 2) {
                     updateButton.addEventListener("click", ((event) => {
-                        uninstall(override.path, event.target);
+                        uninstall(overridePath, event.target);
                     }));
                 } else {
                     updateButton.addEventListener("click", ((event) => {
-                        install(override.path, event.target);
+                        install(overridePath, event.target);
                     }));
                 }
                 return updateButton;
@@ -126,12 +126,12 @@
                     if (installedOverrides[override.path]) {
                         overrideDiv.style.color = override.update ? "blue" : "green";
                         if (override.update) {
-                            overrideDiv.appendChild(addButton(1, override));
+                            overrideDiv.appendChild(addButton(1, override.path));
                         }
-                        overrideDiv.appendChild(addButton(2, override));
+                        overrideDiv.appendChild(addButton(2, override.path));
                     } else {
                         overrideDiv.style.color = "red";
-                        overrideDiv.appendChild(addButton(0, override));
+                        overrideDiv.appendChild(addButton(0, override.path));
                     }
                     document.body.appendChild(overrideDiv);
                 });
