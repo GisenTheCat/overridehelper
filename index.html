@@ -46,6 +46,11 @@
                 const newFolderHandle = await parentFolderHandle.getDirectoryHandle(folderName, { create: true });
                 return newFolderHandle;
             }
+            async function deleteFile(folderHandle, fileName) {
+                const fileHandle = await folderHandle.getFileHandle(fileName);
+                await fileHandle.remove();
+            }
+
 
             async function checkForUpdates() {
                 for (let i = 0; i < Object.keys(installedOverrides).length; i++) {
@@ -73,6 +78,15 @@
                 }
                 createAndSaveFile(folder, path[path.length - 1], content);
             }
+            async function uninstall(extension) {
+                let path = extension.split('/');
+                let folder = folderAccess;
+                let content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='http${(overrides[extension].https ? "s://" : "://") + overrides[extension].path}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                for (let i = 0; i < path.length - 1; i++) {
+                    folder = await createFolder(folder, path[i]);
+                }
+                deleteFile(folder, path[path.length - 1]);
+            }
 
             async function start() {
                 document.body.removeAttribute("onclick");
@@ -86,6 +100,16 @@
                         overrideDiv.innerText = override.name;
                     if (installedOverrides[override.path]) {
                         overrideDiv.style.color = override.update ? "blue" : "green";
+                        if (override.update) {
+                            let uninstallButton = document.createElement("button");
+                            updateButton.innerText = "UPDATE";
+                            updateButton.setAttribute("onclick", `install("${override.path}")`);
+                            overrideDiv.appendChild(updateButton);
+                        }
+                        let uninstallButton = document.createElement("button");
+                        uninstallButton.innerText = "UNINSTALL";
+                        uninstallButton.setAttribute("onclick", `uninstall("${override.path}")`);
+                        overrideDiv.appendChild(uninstallButton);
                     } else {
                         overrideDiv.style.color = "red";
                         document.body.appendChild(overrideDiv);
