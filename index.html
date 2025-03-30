@@ -139,7 +139,7 @@
                 document.body.replaceChildren();
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
-                if (!(await checkCorrectOverrides())) {
+                if (!(await checkCorrectOverrides(folderAccess))) {
                     let sorryDiv = document.createElement("div");
                     sorryDiv.innerText = "Seems like something went wrong, please check if you did everything right and try again";
                     document.body.appendChild(sorryDiv);
