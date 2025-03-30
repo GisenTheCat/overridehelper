@@ -78,6 +78,7 @@
                 }
                 await createAndSaveFile(folder, path[path.length - 1], content);
                 button.parentElement.style.color = "green";
+                button.parentElement.appendChild(addButton(2));
                 button.remove();
             }
             async function uninstall(extension, button) {
@@ -88,7 +89,14 @@
                     folder = await createFolder(folder, path[i]);
                 }
                 await deleteFile(folder, path[path.length - 1]);
-
+                Array.from(button.getChildren()).foreach((e) => {
+                    if (e.innerText == "UPDATE") {
+                        e.remove();
+                    };
+                })
+                button.parentElement.style.color = "red";
+                button.parentElement.appendChild(addButton(0));
+                button.remove();
             }
             function addButton(type, override) {
                 let updateButton = document.createElement("button");
