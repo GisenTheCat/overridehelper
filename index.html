@@ -140,7 +140,7 @@
                 folderAccess = await getFolderAccess();
                 if (!(await checkCorrectOverrides(folderAccess))) {
                     let sorryDiv = document.createElement("div");
-                    sorryDiv.innerText = "Seems like something went wrong, please check if you did everything right and try again";
+                    sorryDiv.innerText = "Something went wrong, please check if you did everything right and try again";
                     document.body.appendChild(sorryDiv);
                     setTimeout(() => {
                         window.location.reload();
