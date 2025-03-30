@@ -102,7 +102,7 @@
                         overrideDiv.style.color = override.update ? "blue" : "green";
                         document.body.appendChild(overrideDiv);
                         if (override.update) {
-                            let uninstallButton = document.createElement("button");
+                            let updateButton = document.createElement("button");
                             updateButton.innerText = "UPDATE";
                             updateButton.setAttribute("onclick", `install("${override.path}")`);
                             overrideDiv.appendChild(updateButton);
