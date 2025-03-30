@@ -127,8 +127,7 @@
             }
 
             async function start() {
-                document.body.remove();
-                document.appendChild(document.createElement("body"));
+                document.body.replaceChildren();
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
