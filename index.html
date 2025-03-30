@@ -127,8 +127,7 @@
             }
 
             async function start() {
-                window.onclick = null;
-                body.innerHtml = "";
+                document.body.innerHtml = "";
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
@@ -150,8 +149,6 @@
                     document.body.appendChild(overrideDiv);
                 });
             }
-
-            window.onclick = start;
         </script>
     </head>
     <body>
@@ -177,7 +174,7 @@
         <div>
             Only the button has to be pressed if you use this website later
         </div>
-        <button onclick="start()" style="height: 100px;width:300px;font-size: 80px">
+        <button onclick="start" style="height: 100px;width:300px;font-size: 80px">
             START
         </button>
         <div>Note that you will need to have DevTools open upon loading a modded page</div>
