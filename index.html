@@ -126,7 +126,7 @@
             }
 
             async function start() {
-                document.body.removeAttribute("onclick");
+                window.onclick = null;
                 overrides = await fetch(baseUrl + "overrides.json").then((res) => res.json());
                 folderAccess = await getFolderAccess();
                 await listOverrides(folderAccess);
@@ -148,9 +148,11 @@
                     document.body.appendChild(overrideDiv);
                 });
             }
+
+            window.onclick = start;
         </script>
     </head>
-    <body onclick="start()">
+    <body>
 
     </body>
 </html>
