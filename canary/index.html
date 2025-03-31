@@ -83,7 +83,7 @@
                 let path = extension.split('/');
                 let folder = folderAccess;
                 if (!overrides[extension].content) {
-                    overrides[extension].content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(function(){var originalScript=document.createElement('script');originalScript.src='${overrides[extension].url}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`);
+                    overrides[extension].content = await fetch(overrides[extension].src).then((res) => res.text()).then((text) => `(async function(){eval(await fetch('${overrides[extension].url}?').then(r=>r.text()))})();var unsafeWindow=window;${text}`);
                 }
                 let content = overrides[extension].content;
                 for (let i = 0; i < path.length - 1; i++) {
