@@ -5,5 +5,12 @@
         "path": "discord.com/assets/web.28364550ed71f774.js",
         "url": "https://discord.com/assets/web.28364550ed71f774.js",
         "src": "https://raw.githubusercontent.com/Vencord/builds/main/Vencord.user.js"
+    },
+    "discord.com/assets/web.28364550ed71f774.js": {
+        "name": "Vencord",
+        "description": "Discord Add-on",
+        "path": "discord.com/assets/web.28364550ed71f774.js",
+        "url": "https://discord.com/assets/web.28364550ed71f774.js",
+        "src": "https://raw.githubusercontent.com/GisenTheCat/overridehelper/main/customoverrides/BetterClassroom.js"
     }
 }
