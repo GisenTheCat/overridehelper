@@ -6,11 +6,11 @@
         "url": "https://discord.com/assets/web.28364550ed71f774.js",
         "src": "https://raw.githubusercontent.com/Vencord/builds/main/Vencord.user.js"
     },
-    "discord.com/assets/web.28364550ed71f774.js": {
-        "name": "Vencord",
-        "description": "Discord Add-on",
-        "path": "discord.com/assets/web.28364550ed71f774.js",
-        "url": "https://discord.com/assets/web.28364550ed71f774.js",
+    "https://www.gstatic.com/og/_/js/k=og.qtm.en_US.VtzkEync3_c.2019.O/rt=j/m=qabr,qgl,q_dnp,qcwid,qbd,qapid,qads,qrcd,q_dg/exm=qaaw,qadd,qaid,qein,qhaw,qhba,qhbr,qhch,qhga,qhid,qhin/d=1/ed=1/rs=AA2YrTsd-Oc-9jGYYPJhWO6mLyTNJNnAMg": {
+        "name": "Improved Classroom",
+        "description": "Classroom Add-on",
+        "path": "www.gstatic.com/longurls/rs=AA2YrTs-5e47e48a",
+        "url": "www.gstatic.com/longurls/rs=AA2YrTs-5e47e48a",
         "src": "https://raw.githubusercontent.com/GisenTheCat/overridehelper/main/customoverrides/BetterClassroom.js"
     }
 }
