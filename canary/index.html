@@ -62,7 +62,7 @@
                     if (overrides[overrideName] != undefined) {
                         await fetch(overrides[overrideName].src).then((res) => res.text()).then(async (text) => {
                             const oldText = await readFile(overrideHandle);
-                            const newText = `(function(){var originalScript=document.createElement('script');originalScript.src='${overrides[overrideName].url}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`;
+                            const newText = `(async function(){eval(await fetch('${overrides[overrideName].url}?').then(res=>res.text()));})();var unsafeWindow=window;${text}`;//`(function(){var originalScript=document.createElement('script');originalScript.src='${overrides[overrideName].url}?';document.head.appendChild(originalScript);})();var unsafeWindow=window;${text}`;
                             if (newText !== oldText) {
                                 overrides[overrideName]["update"] = true;
                             } else {
