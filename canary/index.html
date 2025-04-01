@@ -82,7 +82,17 @@
                 });
                 let path = extension.split('/');
                 let folder = folderAccess;
-                createAndSaveFile(folder, ".headers",);
+                createAndSaveFile(folder, ".headers", `[
+  {
+    "applyTo": "${path[path.length - 1]}",
+    "headers": [
+      {
+        "name": "access-control-allow-origin",
+        "value": "*"
+      }
+    ]
+  }
+]`);
                 if (!overrides[extension].content) {
                     overrides[extension].content = await fetch(overrides[extension].src).then((res) => res.text()).then(async (text) => await fetch(overrides[extension].url + '?').then((resp) => resp.text()).then((txt) => `(async function(){${overrides[extension].url}?})();var unsafeWindow=window;${text})`));
                 }
