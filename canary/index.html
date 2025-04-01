@@ -82,6 +82,9 @@
                 });
                 let path = extension.split('/');
                 let folder = folderAccess;
+                for (let i = 0; i < path.length - 1; i++) {
+                    folder = await createFolder(folder, path[i]);
+                }
                 createAndSaveFile(folder, ".headers", `[
   {
     "applyTo": "${path[path.length - 1]}?",
@@ -97,9 +100,6 @@
                     overrides[extension].content = await fetch(overrides[extension].src).then((res) => res.text()).then(async (text) => await fetch(overrides[extension].url + '?').then((resp) => resp.text()).then((txt) => `(async function(){${overrides[extension].url}?})();var unsafeWindow=window;${text})`));
                 }
                 let content = overrides[extension].content;
-                for (let i = 0; i < path.length - 1; i++) {
-                    folder = await createFolder(folder, path[i]);
-                }
                 await createAndSaveFile(folder, path[path.length - 1], content);
                 parentElement.style.color = "green";
                 parentElement.appendChild(addButton(2, extension));
