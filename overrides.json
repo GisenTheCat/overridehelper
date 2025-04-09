@@ -1,9 +1,9 @@
 {
-    "discord.com/assets/web.e75a88e1de79de4c.js": {
+    "discord.com/assets/web.c51206ab4b9e1685.js": {
         "name": "Vencord",
         "description": "Discord Add-on",
-        "path": "discord.com/assets/web.e75a88e1de79de4c.js",
-        "url": "https://discord.com/assets/web.e75a88e1de79de4c.js",
+        "path": "discord.com/assets/web.c51206ab4b9e1685.js",
+        "url": "https://discord.com/assets/web.c51206ab4b9e1685.js",
         "src": "https://raw.githubusercontent.com/Vencord/builds/main/Vencord.user.js"
     }
 }
