@@ -1,11 +1,11 @@
 body {
-    background-color: #121412;
+    background-color: #19181c;
     font-size: 20px;
     color: white;
 }
 
 .startButton {
-    height: 90px;
-    width: 160px;
-    font-size: 30px;
+    height: 100px;
+    width: 320px;
+    font-size: 60px;
 }
