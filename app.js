@@ -1,5 +1,4 @@
 const baseUrl = "https://gisenthecat.github.io/overridehelper/";
-const installedOverrides = {};
 
 async function start() {
     document.body.replaceChildren();
