@@ -1,5 +1,11 @@
-            body {
-                background-color: #121412;
-                font-size: 20px;
-                color: white;
-            }
+body {
+    background-color: #121412;
+    font-size: 20px;
+    color: white;
+}
+
+.startButton {
+    height: 90px;
+    width: 160px;
+    font-size: 30px;
+}
