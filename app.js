@@ -1,5 +1,3 @@
-const baseUrl = "https://gisenthecat.github.io/overridehelper/";
-
 async function start() {
     document.body.replaceChildren();
 
