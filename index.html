@@ -13,30 +13,38 @@
         <script src="overrideFunctions.js"></script>
     </head>
     <body>
-        <span>
-            To set up overrides, you need to open DevTools (Ctrl + Shift + I)
-            and open the Sources tab<br />
-            <img
-                src="https://gisenthecat.github.io/overridehelper/images/step1.png"
-            /><br />
-            If you can't find it, please press the &gt;&gt; sign to the right<br />
-            Next, go to the Overrides tab which is located underneath the menu
-            you just used<br />
-            <img
-                src="https://gisenthecat.github.io/overridehelper/images/step2.png"
-            /><br />
-            Click the "Select folder for overrides" button, make a folder
-            anywhere and name it something like "overrides"<br />
-            <img
-                src="https://gisenthecat.github.io/overridehelper/images/step3.png"
-            /><br />
-            Select it and press Open<br />
-            Next open DevTools, press the button below and select the folder you
-            used<br />
-            You only have to press the button if you have already gone through
-            the setup<br />
-            DevTools has to be open when you press the button<br />
-        </span>
-        <button onclick="start()" class="startButton">START</button>
+        <div id="overrideSetupPage" style="display: block;">
+            <span>
+                To set up overrides, you need to open DevTools (Ctrl + Shift +
+                I) and open the Sources tab<br />
+                <img
+                    src="https://gisenthecat.github.io/overridehelper/images/step1.png"
+                /><br />
+                If you can't find it, please press the &gt;&gt; sign to the
+                right<br />
+                Next, go to the Overrides tab which is located underneath the
+                menu you just used<br />
+                <img
+                    src="https://gisenthecat.github.io/overridehelper/images/step2.png"
+                /><br />
+                Click the "Select folder for overrides" button, make a folder
+                anywhere and name it something like "overrides"<br />
+                <img
+                    src="https://gisenthecat.github.io/overridehelper/images/step3.png"
+                /><br />
+                Select it and press Open<br />
+                Next open DevTools, press the button below and select the folder
+                you used<br />
+                You only have to press the button if you have already gone
+                through the setup<br />
+                DevTools has to be open when you press the button<br />
+            </span>
+            <button onclick="start()" class="startButton">START</button>
+        </div>
+        <div id="modListPage" style="display: none;">
+            <ul id="modList">
+                <li></li>
+            </ul>
+        </div>
     </body>
 </html>
