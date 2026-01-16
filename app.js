@@ -1,5 +1,10 @@
-let overrideSetupPage = document.getElementById("overrideSetupPage");
-let modListPage = document.getElementById("modListPage");
+let overrideSetupPage;
+let modListPage;
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    let overrideSetupPage = document.getElementById("overrideSetupPage");
+    let modListPage = document.getElementById("modListPage");
+});
 
 async function start() {
     folderAccess = await getFolderAccess();
